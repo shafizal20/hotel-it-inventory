@@ -1,0 +1,36 @@
+.env
+.venv/
+__pycache__/
+node_modules/
+
+# Private environment variables
+.env
+.env.*
+!.env.example
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+
+# Frontend dependencies and builds
+node_modules/
+dist/
+build/
+
+# Private environment variables
+.env
+.env.*
+!.env.example
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+
+# Frontend dependencies and builds
+node_modules/
+dist/
+build/
