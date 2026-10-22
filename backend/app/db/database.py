@@ -3,10 +3,16 @@ from sqlalchemy.engine import URL
 from sqlalchemy.orm import sessionmaker
 from app.core.config import settings
 
-# Never calls create_all(): existing tables are used exactly as they are.
 engine = create_engine(
-    URL.create("postgresql+psycopg2", settings.db_user, settings.db_password,
-               settings.db_host, settings.db_port, settings.db_name),
+    URL.create(
+        "postgresql+psycopg2",
+        username=settings.db_user,
+        password=settings.db_password,
+        host=settings.db_host,
+        port=settings.db_port,
+        database=settings.db_name,
+    ),
+    connect_args={"sslmode": "require"},
     pool_pre_ping=True,
 )
 SessionLocal = sessionmaker(bind=engine, autoflush=False)
