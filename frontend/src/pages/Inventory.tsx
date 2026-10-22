@@ -17,10 +17,11 @@ export type Cfg = { title: string; path: string; report: string; search: string;
 const loc: Field = { key: "location", label: "Location", type: "text" };
 const bil: Field = { key: "bil", label: "Bil", type: "number" };
 
+// Austin Park Hotel palette
 const STATUS: Record<string, [string, string]> = {
-  full: ["Fully operational", "bg-emerald-50 text-emerald-700 border-emerald-200"],
-  partial: ["Partially operational", "bg-amber-50 text-amber-700 border-amber-200"],
-  none: ["None operating", "bg-rose-50 text-rose-700 border-rose-200"],
+  full: ["Fully operational", "bg-[#f3ecd9] text-[#5a3218] border-[#b8862b]"],
+  partial: ["Partially operational", "bg-[#faf3e4] text-[#7a4a1e] border-[#c9a13b]"],
+  none: ["None operating", "bg-[#f5e8e0] text-[#a0522d] border-[#a0522d]"],
 };
 
 export const CONFIGS: Record<string, Cfg> = {
@@ -117,7 +118,7 @@ function Modal({ children, onClose, label }: { children: React.ReactNode; onClos
   }, [onClose, ref]);
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4 animate-[fadeIn_150ms_ease-out]"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-[#3d2410]/60 backdrop-blur-sm p-4 animate-[fadeIn_150ms_ease-out]"
       onMouseDown={onClose}
     >
       <div
@@ -125,7 +126,7 @@ function Modal({ children, onClose, label }: { children: React.ReactNode; onClos
         role="dialog"
         aria-modal="true"
         aria-label={label}
-        className="w-full max-w-lg max-h-[90vh] overflow-auto rounded-xl border border-slate-200 bg-white shadow-2xl"
+        className="w-full max-w-lg max-h-[90vh] overflow-auto rounded-xl border border-[#e8d9a8] bg-[#fdfaf3] shadow-2xl"
         onMouseDown={e => e.stopPropagation()}
       >
         {children}
@@ -139,9 +140,9 @@ function IconButton({ label, onClick, children, tone = "slate", disabled }: {
   tone?: "slate" | "rose" | "amber"; disabled?: boolean;
 }) {
   const tones = {
-    slate: "text-slate-500 hover:bg-slate-100 hover:text-slate-900",
-    rose: "text-slate-500 hover:bg-rose-50 hover:text-rose-700",
-    amber: "text-slate-500 hover:bg-amber-50 hover:text-amber-700",
+    slate: "text-[#8a6a4a] hover:bg-[#f5eee2] hover:text-[#5a3218]",
+    rose: "text-[#8a6a4a] hover:bg-[#f5e8e0] hover:text-[#a0522d]",
+    amber: "text-[#8a6a4a] hover:bg-[#faf3e4] hover:text-[#7a4a1e]",
   };
   return (
     <button
@@ -163,9 +164,9 @@ function ToolbarButton({ icon, children, onClick, href, tone = "ghost" }: {
 }) {
   const base = "inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium transition whitespace-nowrap";
   const tones = {
-    ghost: "border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 hover:border-slate-300",
-    primary: "bg-slate-900 text-white hover:bg-slate-800 shadow-sm",
-    danger: "bg-rose-600 text-white hover:bg-rose-700 shadow-sm",
+    ghost: "border border-[#e8d9a8] bg-[#faf6ef] text-[#7a4a1e] hover:bg-[#f5eee2] hover:border-[#c9a13b]",
+    primary: "bg-[#5a3218] text-[#faf6ef] hover:bg-[#7a4a1e] shadow-sm",
+    danger: "bg-[#a0522d] text-[#faf6ef] hover:bg-[#8a4525] shadow-sm",
   };
   if (href) return <a href={href} className={`${base} ${tones[tone]}`}>{icon}{children}</a>;
   return <button type="button" onClick={onClick} className={`${base} ${tones[tone]}`}>{icon}{children}</button>;
@@ -275,23 +276,23 @@ export default function Inventory({ cfg }: { cfg: Cfg }) {
 
   /* ---- Render ---- */
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 bg-[#f2ead9] p-4 min-h-screen text-[#3d2410]">
       {/* Header */}
       <div className="flex flex-wrap items-center gap-3">
         <div className="mr-auto">
-          <h1 className="text-xl font-bold tracking-tight text-slate-900">{cfg.title}</h1>
-          <p className="mt-0.5 text-xs text-slate-500">
+          <h1 className="text-xl font-bold tracking-tight text-[#5a3218]">{cfg.title}</h1>
+          <p className="mt-0.5 text-xs text-[#8a6a4a]">
             {data.total.toLocaleString()} record{data.total === 1 ? "" : "s"}
-            {filterActive && <span className="ml-1 text-slate-400">· filtered</span>}
+            {filterActive && <span className="ml-1 text-[#a08a6a]">· filtered</span>}
           </p>
         </div>
 
         {/* Search & filters */}
         <div className="flex flex-wrap items-center gap-2">
           <div className="relative">
-            <Search size={14} className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400" />
+            <Search size={14} className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-[#a08a6a]" />
             <input
-              className="w-64 rounded-lg border border-slate-200 bg-white py-1.5 pl-8 pr-8 text-sm placeholder:text-slate-400 focus:border-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200"
+              className="w-64 rounded-lg border border-[#e8d9a8] bg-[#faf6ef] py-1.5 pl-8 pr-8 text-sm text-[#5a3218] placeholder:text-[#a08a6a] focus:border-[#c9a13b] focus:outline-none focus:ring-2 focus:ring-[#c9a13b]/30"
               placeholder={cfg.search}
               value={q}
               onChange={e => { setQ(e.target.value); setPage(1); }}
@@ -301,7 +302,7 @@ export default function Inventory({ cfg }: { cfg: Cfg }) {
                 type="button"
                 aria-label="Clear search"
                 onClick={() => { setQ(""); setPage(1); }}
-                className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700"
+                className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded p-1 text-[#a08a6a] hover:bg-[#f5eee2] hover:text-[#5a3218]"
               >
                 <X size={12} />
               </button>
@@ -309,9 +310,9 @@ export default function Inventory({ cfg }: { cfg: Cfg }) {
           </div>
 
           <div className="relative">
-            <Filter size={14} className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400" />
+            <Filter size={14} className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-[#a08a6a]" />
             <input
-              className="w-48 rounded-lg border border-slate-200 bg-white py-1.5 pl-8 pr-3 text-sm placeholder:text-slate-400 focus:border-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200"
+              className="w-48 rounded-lg border border-[#e8d9a8] bg-[#faf6ef] py-1.5 pl-8 pr-3 text-sm text-[#5a3218] placeholder:text-[#a08a6a] focus:border-[#c9a13b] focus:outline-none focus:ring-2 focus:ring-[#c9a13b]/30"
               placeholder="Filter by location…"
               value={location}
               onChange={e => { setLocation(e.target.value); setPage(1); }}
@@ -322,7 +323,7 @@ export default function Inventory({ cfg }: { cfg: Cfg }) {
             <button
               type="button"
               onClick={clearFilters}
-              className="inline-flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-xs font-medium text-slate-500 hover:bg-slate-100 hover:text-slate-800 transition"
+              className="inline-flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-xs font-medium text-[#8a6a4a] hover:bg-[#f5eee2] hover:text-[#5a3218] transition"
             >
               <RotateCcw size={12} /> Reset
             </button>
@@ -335,10 +336,10 @@ export default function Inventory({ cfg }: { cfg: Cfg }) {
             {showColMenu && (
               <>
                 <div className="fixed inset-0 z-10" onClick={() => setShowColMenu(false)} />
-                <div className="absolute right-0 top-full z-20 mt-1 w-52 rounded-lg border border-slate-200 bg-white p-1.5 shadow-lg">
+                <div className="absolute right-0 top-full z-20 mt-1 w-52 rounded-lg border border-[#e8d9a8] bg-[#fdfaf3] p-1.5 shadow-lg">
                   {cfg.cols.map(c => (
-                    <label key={c.key} className="flex cursor-pointer items-center gap-2 rounded px-2 py-1.5 text-sm text-slate-700 hover:bg-slate-50">
-                      <input type="checkbox" checked={!hidden.has(c.key)} onChange={() => toggleCol(c.key)} className="rounded border-slate-300" />
+                    <label key={c.key} className="flex cursor-pointer items-center gap-2 rounded px-2 py-1.5 text-sm text-[#5a3218] hover:bg-[#f5eee2]">
+                      <input type="checkbox" checked={!hidden.has(c.key)} onChange={() => toggleCol(c.key)} className="rounded border-[#c9a13b] accent-[#7a4a1e]" />
                       {c.label}
                     </label>
                   ))}
@@ -359,23 +360,23 @@ export default function Inventory({ cfg }: { cfg: Cfg }) {
 
       {/* Error */}
       {err && (
-        <div role="alert" className="flex items-start gap-2 rounded-lg border border-rose-200 bg-rose-50 p-3 text-sm text-rose-800">
-          <AlertTriangle size={16} className="mt-0.5 shrink-0" />
+        <div role="alert" className="flex items-start gap-2 rounded-lg border border-[#a0522d] bg-[#f5e8e0] p-3 text-sm text-[#5a3218]">
+          <AlertTriangle size={16} className="mt-0.5 shrink-0 text-[#a0522d]" />
           <span className="flex-1">{err}</span>
-          <button onClick={() => setErr("")} className="rounded p-0.5 hover:bg-rose-100" aria-label="Dismiss"><X size={14} /></button>
+          <button onClick={() => setErr("")} className="rounded p-0.5 hover:bg-[#e8d9a8]" aria-label="Dismiss"><X size={14} /></button>
         </div>
       )}
 
       {/* Bulk action bar */}
       {selected.size > 0 && (
-        <div className="flex items-center gap-3 rounded-lg border border-slate-900 bg-slate-900 px-4 py-2.5 text-sm text-white shadow-md">
+        <div className="flex items-center gap-3 rounded-lg border border-[#5a3218] bg-[#5a3218] px-4 py-2.5 text-sm text-[#faf6ef] shadow-md">
           <span className="font-medium">{selected.size} selected</span>
-          <button onClick={clearSelection} className="text-xs text-slate-300 hover:text-white">Clear</button>
+          <button onClick={clearSelection} className="text-xs text-[#e8d9a8] hover:text-white">Clear</button>
           <div className="ml-auto flex items-center gap-2">
             <button
               onClick={bulkDelete}
               disabled={deleting}
-              className="inline-flex items-center gap-1.5 rounded-md bg-rose-600 px-3 py-1.5 text-xs font-semibold hover:bg-rose-700 disabled:opacity-50 transition"
+              className="inline-flex items-center gap-1.5 rounded-md bg-[#a0522d] px-3 py-1.5 text-xs font-semibold hover:bg-[#8a4525] disabled:opacity-50 transition"
             >
               {deleting ? <Loader2 size={12} className="animate-spin" /> : <Trash2 size={12} />}
               Delete selected
@@ -385,19 +386,19 @@ export default function Inventory({ cfg }: { cfg: Cfg }) {
       )}
 
       {/* Table */}
-      <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+      <div className="overflow-hidden rounded-xl border border-[#e8d9a8] bg-[#fdfaf3] shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
-            <thead className="sticky top-0 z-10 bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
+            <thead className="sticky top-0 z-10 bg-[#e8d9a8] text-xs uppercase tracking-wide text-[#5a3218]">
               <tr>
                 <th className="w-10 p-3">
                   <button
                     type="button"
                     onClick={toggleAllOnPage}
                     aria-label={allOnPage ? "Deselect all" : "Select all"}
-                    className="text-slate-400 hover:text-slate-700"
+                    className="text-[#7a4a1e] hover:text-[#5a3218]"
                   >
-                    {allOnPage ? <CheckSquare size={16} /> : someOnPage ? <div className="h-4 w-4 rounded border-2 border-slate-400 bg-slate-200" /> : <Square size={16} />}
+                    {allOnPage ? <CheckSquare size={16} /> : someOnPage ? <div className="h-4 w-4 rounded border-2 border-[#7a4a1e] bg-[#c9a13b]" /> : <Square size={16} />}
                   </button>
                 </th>
                 <th className="w-16 p-3 font-semibold">Photo</th>
@@ -406,11 +407,11 @@ export default function Inventory({ cfg }: { cfg: Cfg }) {
                     {c.sortable ? (
                       <button
                         onClick={() => toggleSort(c.key)}
-                        className={`inline-flex items-center gap-1 uppercase transition ${sort === c.key ? "text-slate-900" : "hover:text-slate-700"}`}
+                        className={`inline-flex items-center gap-1 uppercase transition ${sort === c.key ? "text-[#5a3218]" : "hover:text-[#7a4a1e]"}`}
                       >
                         {c.label}
                         <ArrowDownUp size={11} className={sort === c.key ? "opacity-100" : "opacity-40"} />
-                        {sort === c.key && <span className="text-[9px] text-slate-400">{order === "asc" ? "▲" : "▼"}</span>}
+                        {sort === c.key && <span className="text-[9px] text-[#a08a6a]">{order === "asc" ? "▲" : "▼"}</span>}
                       </button>
                     ) : c.label}
                   </th>
@@ -418,22 +419,22 @@ export default function Inventory({ cfg }: { cfg: Cfg }) {
                 <th className="no-print p-3 text-right font-semibold">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-[#e8d9a8]/60">
               {loading && !data.items.length && (
                 Array.from({ length: 5 }).map((_, i) => (
                   <tr key={i} className="animate-pulse">
-                    <td className="p-3"><div className="h-4 w-4 rounded bg-slate-100" /></td>
-                    <td className="p-3"><div className="h-10 w-10 rounded bg-slate-100" /></td>
-                    {visibleCols.map(c => <td key={c.key} className="p-3"><div className="h-3 w-20 rounded bg-slate-100" /></td>)}
-                    <td className="p-3"><div className="ml-auto h-3 w-12 rounded bg-slate-100" /></td>
+                    <td className="p-3"><div className="h-4 w-4 rounded bg-[#f5eee2]" /></td>
+                    <td className="p-3"><div className="h-10 w-10 rounded bg-[#f5eee2]" /></td>
+                    {visibleCols.map(c => <td key={c.key} className="p-3"><div className="h-3 w-20 rounded bg-[#f5eee2]" /></td>)}
+                    <td className="p-3"><div className="ml-auto h-3 w-12 rounded bg-[#f5eee2]" /></td>
                   </tr>
                 ))
               )}
               {data.items.map(r => (
-                <tr key={r.id} className={`group transition ${selected.has(r.id) ? "bg-amber-50/50" : "hover:bg-slate-50/80"}`}>
+                <tr key={r.id} className={`group transition ${selected.has(r.id) ? "bg-[#faf3e4]" : "hover:bg-[#faf6ef]"}`}>
                   <td className="p-3">
-                    <button type="button" onClick={() => toggleRow(r.id)} aria-label="Select row" className="text-slate-400 hover:text-slate-700">
-                      {selected.has(r.id) ? <CheckSquare size={16} className="text-slate-900" /> : <Square size={16} />}
+                    <button type="button" onClick={() => toggleRow(r.id)} aria-label="Select row" className="text-[#a08a6a] hover:text-[#5a3218]">
+                      {selected.has(r.id) ? <CheckSquare size={16} className="text-[#5a3218]" /> : <Square size={16} />}
                     </button>
                   </td>
                   <td className="p-3">
@@ -441,7 +442,7 @@ export default function Inventory({ cfg }: { cfg: Cfg }) {
                       <button
                         type="button"
                         onClick={() => openLightbox(r)}
-                        className="block overflow-hidden rounded-md ring-1 ring-slate-200 hover:ring-slate-400 transition"
+                        className="block overflow-hidden rounded-md ring-1 ring-[#e8d9a8] hover:ring-[#c9a13b] transition"
                       >
                         <img
                           loading="lazy"
@@ -451,14 +452,14 @@ export default function Inventory({ cfg }: { cfg: Cfg }) {
                         />
                       </button>
                     ) : (
-                      <div className="flex h-10 w-10 items-center justify-center rounded-md bg-slate-50 text-slate-300 ring-1 ring-slate-100">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-md bg-[#f5eee2] text-[#c9a13b] ring-1 ring-[#e8d9a8]">
                         <ImageOff size={14} />
                       </div>
                     )}
                   </td>
                   {visibleCols.map(c => (
-                    <td key={c.key} className="p-3 text-slate-700">
-                      {c.render ? c.render(r) : (r[c.key] ?? <span className="text-slate-300">—</span>)}
+                    <td key={c.key} className="p-3 text-[#5a3218]">
+                      {c.render ? c.render(r) : (r[c.key] ?? <span className="text-[#c9a13b]">—</span>)}
                     </td>
                   ))}
                   <td className="no-print p-3 text-right">
@@ -475,16 +476,16 @@ export default function Inventory({ cfg }: { cfg: Cfg }) {
               {!loading && !data.items.length && (
                 <tr>
                   <td colSpan={visibleCols.length + 3} className="p-12 text-center">
-                    <div className="flex flex-col items-center gap-2 text-slate-400">
-                      <div className="rounded-full bg-slate-50 p-3"><Search size={20} /></div>
-                      <p className="text-sm font-medium text-slate-600">
+                    <div className="flex flex-col items-center gap-2 text-[#a08a6a]">
+                      <div className="rounded-full bg-[#f5eee2] p-3"><Search size={20} /></div>
+                      <p className="text-sm font-medium text-[#5a3218]">
                         {filterActive ? "No records match your filters" : "No records yet"}
                       </p>
                       <p className="text-xs">
                         {filterActive ? "Try adjusting your search or filters." : "Click Add to create the first record."}
                       </p>
                       {filterActive && (
-                        <button onClick={clearFilters} className="mt-2 text-xs font-medium text-slate-700 underline hover:text-slate-900">
+                        <button onClick={clearFilters} className="mt-2 text-xs font-medium text-[#7a4a1e] underline hover:text-[#5a3218]">
                           Clear filters
                         </button>
                       )}
@@ -498,14 +499,14 @@ export default function Inventory({ cfg }: { cfg: Cfg }) {
       </div>
 
       {/* Pagination */}
-      <div className="no-print flex flex-wrap items-center justify-between gap-3 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm">
-        <div className="flex items-center gap-2 text-slate-600">
+      <div className="no-print flex flex-wrap items-center justify-between gap-3 rounded-lg border border-[#e8d9a8] bg-[#fdfaf3] px-3 py-2 text-sm">
+        <div className="flex items-center gap-2 text-[#8a6a4a]">
           <span>
             {data.total === 0 ? "0" : `${(page - 1) * size + 1}–${Math.min(page * size, data.total)}`} of{" "}
-            <span className="font-medium text-slate-900">{data.total.toLocaleString()}</span>
+            <span className="font-medium text-[#5a3218]">{data.total.toLocaleString()}</span>
           </span>
           <select
-            className="rounded-md border border-slate-200 bg-white px-2 py-1 text-xs focus:border-slate-400 focus:outline-none"
+            className="rounded-md border border-[#e8d9a8] bg-[#faf6ef] px-2 py-1 text-xs text-[#5a3218] focus:border-[#c9a13b] focus:outline-none"
             value={size}
             onChange={e => { setSize(+e.target.value); setPage(1); }}
           >
@@ -515,8 +516,8 @@ export default function Inventory({ cfg }: { cfg: Cfg }) {
         <div className="flex items-center gap-0.5">
           <IconButton label="First page" onClick={() => setPage(1)} disabled={page <= 1}><ChevronsLeft size={15} /></IconButton>
           <IconButton label="Previous page" onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page <= 1}><ChevronLeft size={15} /></IconButton>
-          <span className="px-3 text-xs text-slate-600">
-            Page <span className="font-medium text-slate-900">{page}</span> of {pages}
+          <span className="px-3 text-xs text-[#8a6a4a]">
+            Page <span className="font-medium text-[#5a3218]">{page}</span> of {pages}
           </span>
           <IconButton label="Next page" onClick={() => setPage(p => Math.min(pages, p + 1))} disabled={page >= pages}><ChevronRight size={15} /></IconButton>
           <IconButton label="Last page" onClick={() => setPage(pages)} disabled={page >= pages}><ChevronsRight size={15} /></IconButton>
@@ -530,16 +531,16 @@ export default function Inventory({ cfg }: { cfg: Cfg }) {
         <Modal onClose={() => setDel(null)} label="Confirm delete">
           <div className="p-5">
             <div className="flex items-start gap-3">
-              <div className="rounded-full bg-rose-50 p-2 text-rose-600"><AlertTriangle size={20} /></div>
+              <div className="rounded-full bg-[#f5e8e0] p-2 text-[#a0522d]"><AlertTriangle size={20} /></div>
               <div>
-                <h2 className="font-semibold text-slate-900">Delete record?</h2>
-                <p className="mt-1 text-sm text-slate-500">This will permanently remove the record. This action cannot be undone.</p>
+                <h2 className="font-semibold text-[#5a3218]">Delete record?</h2>
+                <p className="mt-1 text-sm text-[#8a6a4a]">This will permanently remove the record. This action cannot be undone.</p>
               </div>
             </div>
             <div className="mt-5 flex justify-end gap-2">
-              <button className="rounded-lg border border-slate-200 bg-white px-3.5 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50" onClick={() => setDel(null)}>Cancel</button>
+              <button className="rounded-lg border border-[#e8d9a8] bg-[#faf6ef] px-3.5 py-1.5 text-sm font-medium text-[#7a4a1e] hover:bg-[#f5eee2]" onClick={() => setDel(null)}>Cancel</button>
               <button
-                className="inline-flex items-center gap-1.5 rounded-lg bg-rose-600 px-3.5 py-1.5 text-sm font-semibold text-white hover:bg-rose-700 disabled:opacity-50"
+                className="inline-flex items-center gap-1.5 rounded-lg bg-[#a0522d] px-3.5 py-1.5 text-sm font-semibold text-[#faf6ef] hover:bg-[#8a4525] disabled:opacity-50"
                 onClick={async () => {
                   try { await api.delete(`${cfg.path}/${del.id}`); setDel(null); load(); }
                   catch (e) { setErr(errMsg(e)); setDel(null); }
@@ -554,23 +555,23 @@ export default function Inventory({ cfg }: { cfg: Cfg }) {
 
       {big && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/80 backdrop-blur-sm p-4"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-[#3d2410]/80 backdrop-blur-sm p-4"
           onClick={() => setBig(null)}
         >
-          <button className="absolute right-4 top-4 rounded-full bg-white/10 p-2 text-white hover:bg-white/20" aria-label="Close">
+          <button className="absolute right-4 top-4 rounded-full bg-[#faf6ef]/10 p-2 text-[#faf6ef] hover:bg-[#faf6ef]/20" aria-label="Close">
             <X size={20} />
           </button>
           {big.list.length > 1 && (
             <>
               <button
-                className="absolute left-4 rounded-full bg-white/10 p-3 text-white hover:bg-white/20"
+                className="absolute left-4 rounded-full bg-[#faf6ef]/10 p-3 text-[#faf6ef] hover:bg-[#faf6ef]/20"
                 aria-label="Previous"
                 onClick={e => { e.stopPropagation(); setBig(b => b && { ...b, index: (b.index - 1 + b.list.length) % b.list.length }); }}
               >
                 <ChevronLeft size={20} />
               </button>
               <button
-                className="absolute right-4 rounded-full bg-white/10 p-3 text-white hover:bg-white/20"
+                className="absolute right-4 rounded-full bg-[#faf6ef]/10 p-3 text-[#faf6ef] hover:bg-[#faf6ef]/20"
                 aria-label="Next"
                 onClick={e => { e.stopPropagation(); setBig(b => b && { ...b, index: (b.index + 1) % b.list.length }); }}
               >
@@ -585,7 +586,7 @@ export default function Inventory({ cfg }: { cfg: Cfg }) {
             onClick={e => e.stopPropagation()}
           />
           {big.list.length > 1 && (
-            <div className="absolute bottom-4 rounded-full bg-black/60 px-3 py-1 text-xs text-white">
+            <div className="absolute bottom-4 rounded-full bg-[#3d2410]/60 px-3 py-1 text-xs text-[#faf6ef]">
               {big.index + 1} / {big.list.length}
             </div>
           )}
@@ -643,10 +644,10 @@ function EditForm({ cfg, row, onClose, onSaved }: { cfg: Cfg; row: any; onClose:
       <form onSubmit={submit} className="space-y-4 p-5">
         <div className="flex items-start justify-between">
           <div>
-            <h2 className="text-base font-semibold text-slate-900">{isNew ? "Add record" : "Edit record"}</h2>
-            <p className="text-xs text-slate-500">{isNew ? "Create a new inventory entry" : `Editing record #${row.id}`}</p>
+            <h2 className="text-base font-semibold text-[#5a3218]">{isNew ? "Add record" : "Edit record"}</h2>
+            <p className="text-xs text-[#8a6a4a]">{isNew ? "Create a new inventory entry" : `Editing record #${row.id}`}</p>
           </div>
-          <button type="button" onClick={attemptClose} aria-label="Close" className="rounded-md p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700">
+          <button type="button" onClick={attemptClose} aria-label="Close" className="rounded-md p-1 text-[#a08a6a] hover:bg-[#f5eee2] hover:text-[#5a3218]">
             <X size={16} />
           </button>
         </div>
@@ -654,12 +655,12 @@ function EditForm({ cfg, row, onClose, onSaved }: { cfg: Cfg; row: any; onClose:
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           {cfg.fields.map((f, i) => (
             <label key={f.key} className={`block text-sm ${f.key === "location" || f.key === "item" || f.key === "item_name" ? "sm:col-span-2" : ""}`}>
-              <span className="text-xs font-medium text-slate-600">
-                {f.label}{f.required && <span className="ml-0.5 text-rose-500">*</span>}
+              <span className="text-xs font-medium text-[#7a4a1e]">
+                {f.label}{f.required && <span className="ml-0.5 text-[#a0522d]">*</span>}
               </span>
               <input
                 ref={i === 0 ? firstInput : undefined}
-                className="mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm placeholder:text-slate-400 focus:border-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200"
+                className="mt-1 w-full rounded-lg border border-[#e8d9a8] bg-[#faf6ef] px-3 py-2 text-sm text-[#5a3218] placeholder:text-[#a08a6a] focus:border-[#c9a13b] focus:outline-none focus:ring-2 focus:ring-[#c9a13b]/30"
                 type={f.type}
                 min={f.type === "number" ? 0 : undefined}
                 required={f.required}
@@ -670,13 +671,13 @@ function EditForm({ cfg, row, onClose, onSaved }: { cfg: Cfg; row: any; onClose:
           ))}
         </div>
 
-        <div className="rounded-lg border border-dashed border-slate-200 bg-slate-50/50 p-3">
+        <div className="rounded-lg border border-dashed border-[#e8d9a8] bg-[#faf6ef]/60 p-3">
           <div className="flex items-center justify-between gap-3">
             <div>
-              <div className="text-xs font-medium text-slate-700">Photo</div>
-              <div className="text-[11px] text-slate-400">JPEG, PNG or WebP</div>
+              <div className="text-xs font-medium text-[#5a3218]">Photo</div>
+              <div className="text-[11px] text-[#a08a6a]">JPEG, PNG or WebP</div>
             </div>
-            <label className="cursor-pointer rounded-md border border-slate-200 bg-white px-2.5 py-1 text-xs font-medium text-slate-700 hover:bg-slate-50">
+            <label className="cursor-pointer rounded-md border border-[#e8d9a8] bg-[#faf6ef] px-2.5 py-1 text-xs font-medium text-[#7a4a1e] hover:bg-[#f5eee2]">
               {preview ? "Change" : "Upload"}
               <input
                 type="file"
@@ -688,10 +689,10 @@ function EditForm({ cfg, row, onClose, onSaved }: { cfg: Cfg; row: any; onClose:
           </div>
           {preview && (
             <div className="mt-3 flex items-center gap-3">
-              <img alt="Preview" src={preview} className="h-20 w-20 rounded-lg object-cover ring-1 ring-slate-200" />
+              <img alt="Preview" src={preview} className="h-20 w-20 rounded-lg object-cover ring-1 ring-[#e8d9a8]" />
               <button
                 type="button"
-                className="rounded-md px-2 py-1 text-xs font-medium text-rose-600 hover:bg-rose-50"
+                className="rounded-md px-2 py-1 text-xs font-medium text-[#a0522d] hover:bg-[#f5e8e0]"
                 onClick={() => { setFile(null); setRemove(true); }}
               >
                 Remove
@@ -701,19 +702,19 @@ function EditForm({ cfg, row, onClose, onSaved }: { cfg: Cfg; row: any; onClose:
         </div>
 
         {err && (
-          <div role="alert" className="flex items-start gap-2 rounded-lg border border-rose-200 bg-rose-50 p-2.5 text-sm text-rose-800">
-            <AlertTriangle size={14} className="mt-0.5 shrink-0" />
+          <div role="alert" className="flex items-start gap-2 rounded-lg border border-[#a0522d] bg-[#f5e8e0] p-2.5 text-sm text-[#5a3218]">
+            <AlertTriangle size={14} className="mt-0.5 shrink-0 text-[#a0522d]" />
             <span>{err}</span>
           </div>
         )}
 
-        <div className="flex items-center justify-between border-t border-slate-100 pt-3">
-          <span className="text-xs text-slate-400">{dirty ? "Unsaved changes" : "No changes"}</span>
+        <div className="flex items-center justify-between border-t border-[#e8d9a8] pt-3">
+          <span className="text-xs text-[#a08a6a]">{dirty ? "Unsaved changes" : "No changes"}</span>
           <div className="flex gap-2">
-            <button type="button" className="rounded-lg border border-slate-200 bg-white px-3.5 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50" onClick={attemptClose}>
+            <button type="button" className="rounded-lg border border-[#e8d9a8] bg-[#faf6ef] px-3.5 py-1.5 text-sm font-medium text-[#7a4a1e] hover:bg-[#f5eee2]" onClick={attemptClose}>
               Cancel
             </button>
-            <button className="inline-flex items-center gap-1.5 rounded-lg bg-slate-900 px-3.5 py-1.5 text-sm font-semibold text-white hover:bg-slate-800 disabled:opacity-50" disabled={busy || !dirty}>
+            <button className="inline-flex items-center gap-1.5 rounded-lg bg-[#5a3218] px-3.5 py-1.5 text-sm font-semibold text-[#faf6ef] hover:bg-[#7a4a1e] disabled:opacity-50" disabled={busy || !dirty}>
               {busy ? <><Loader2 size={13} className="animate-spin" /> Saving…</> : isNew ? "Create" : "Save changes"}
             </button>
           </div>

@@ -1,0 +1,8 @@
+
+{
+  "name": "hotel-it-inventory",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix frontend run dev"
+  }
+}
